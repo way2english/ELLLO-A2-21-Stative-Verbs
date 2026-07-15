@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A2-21 Stative Verbs | Way2English</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#4361ee;--violet:#7c3aed;--teal:#0d9488;
+  --green:#16a34a;--red:#dc2626;
+  --bg:#f8fafc;--card:#fff;--text:#1e293b;
+  --muted:#64748b;--border:#e2e8f0;
+  --shadow:0 4px 24px rgba(67,97,238,.10);--radius:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#1e3a8a 0%,#4361ee 55%,#7c3aed 100%);padding:32px 24px 28px;text-align:center;color:#fff}
+.hero h1{font-size:clamp(20px,4vw,28px);font-weight:800;margin-bottom:6px}
+.hero p{font-size:14px;opacity:.85}
+.badge{display:inline-block;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);border-radius:20px;font-size:12px;font-weight:700;padding:3px 12px;margin-bottom:12px;letter-spacing:.5px}
+
+/* STEPPER */
+.stepper{display:flex;overflow-x:auto;gap:0;background:#fff;border-bottom:1px solid var(--border);scrollbar-width:none}
+.stepper::-webkit-scrollbar{display:none}
+.step-btn{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 14px;border:none;background:none;cursor:pointer;font-family:inherit;font-size:11px;color:var(--muted);font-weight:600;border-bottom:3px solid transparent;transition:all .2s;white-space:nowrap}
+.step-btn .sicon{font-size:18px}
+.step-btn:hover{color:var(--blue)}
+.step-btn.active{color:var(--blue);border-bottom-color:var(--blue)}
+.step-btn.done{color:var(--green)}
+
+/* PANELS */
+.step-panel{display:none;padding:24px 16px;max-width:760px;margin:0 auto}
+.step-panel.active{display:block;animation:fadeUp .35s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+/* CARD */
+.card{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);box-shadow:var(--shadow);padding:22px;margin-bottom:18px}
+.card-title{font-size:16px;font-weight:800;margin-bottom:14px}
+.section-label{font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px}
+
+/* WATCH */
+.infographic{width:100%;border-radius:12px;margin-bottom:20px;display:block}
+.vimeo-wrap{position:relative;padding-bottom:56.25%;height:0;border-radius:12px;overflow:hidden;margin-bottom:18px}
+.vimeo-wrap iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
+.conv-list{list-style:none;display:grid;gap:8px}
+.conv-list li{background:#f1f5f9;border-radius:10px;padding:10px 14px;font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px}
+.conv-list li .num{background:var(--blue);color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+
+/* VOCAB */
+.vocab-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.vocab-item{background:#f8fafc;border:1px solid var(--border);border-radius:10px;padding:10px 12px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.vocab-word{font-weight:700;font-size:14px;flex:1}
+.vocab-ua{font-size:12px;color:var(--muted);margin-top:3px;font-weight:400}
+.speak-btn{background:none;border:none;cursor:pointer;font-size:18px;padding:2px}
+
+/* CONVERSATION */
+.conv-img{width:100%;border-radius:12px;margin-bottom:14px;max-height:220px;object-fit:cover}
+.quiz-q{margin-bottom:14px}
+.quiz-q p{font-size:14px;font-weight:700;margin-bottom:8px}
+.quiz-opts{display:flex;flex-direction:column;gap:6px}
+.quiz-opt{text-align:left;background:#f1f5f9;border:2px solid var(--border);border-radius:10px;padding:9px 14px;font-size:13px;font-family:inherit;cursor:pointer;transition:all .15s;font-weight:600}
+.quiz-opt:hover:not(:disabled){background:#e0e7ff;border-color:var(--blue)}
+.quiz-opt.correct{background:#dcfce7;border-color:var(--green);color:var(--green)}
+.quiz-opt.wrong{background:#fee2e2;border-color:var(--red);color:var(--red)}
+.quiz-result{margin-top:10px;padding:10px 14px;border-radius:10px;font-weight:700;font-size:14px;text-align:center}
+.quiz-result.pass{background:#dcfce7;color:var(--green)}
+.quiz-result.fail{background:#fef9c3;color:#92400e}
+
+/* PUZZLE */
+.pzl-line{display:flex;flex-wrap:wrap;gap:5px;align-items:center;margin-bottom:8px;font-size:14px;line-height:1.9}
+.pzl-word{font-weight:600}
+.pzl-sel{border:2px solid var(--blue);border-radius:8px;padding:3px 6px;font-family:inherit;font-size:13px;font-weight:600;background:#eff6ff;color:var(--blue);cursor:pointer;max-width:160px}
+.pzl-sel.ok{border-color:var(--green);background:#dcfce7;color:var(--green)}
+.pzl-sel.err{border-color:var(--red);background:#fee2e2;color:var(--red)}
+.pzl-audio-label{font-size:12px;color:var(--muted);margin:14px 0 4px;font-style:italic}
+.pzl-score{margin-top:8px;font-weight:700;font-size:14px}
+.check-btn{background:var(--blue);color:#fff;border:none;border-radius:10px;padding:10px 22px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;margin-top:12px;transition:opacity .2s}
+.check-btn:hover{opacity:.88}
+
+/* READING */
+.slide{display:none}.slide.active{display:block}
+.transcript p{font-size:14px;line-height:1.9;margin-bottom:8px}
+.transcript strong{color:var(--blue)}
+.car-nav{display:flex;align-items:center;gap:12px;margin-top:16px;justify-content:center}
+.car-btn{background:var(--blue);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;transition:opacity .2s}
+.car-btn:disabled{opacity:.35;cursor:default}
+.car-counter{font-size:13px;font-weight:700;color:var(--muted);min-width:50px;text-align:center}
+
+/* FLASHCARDS */
+.flip-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
+.flip-card{height:110px;perspective:600px;cursor:pointer}
+.flip-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.flip-card.flipped .flip-inner{transform:rotateY(180deg)}
+.flip-front,.flip-back{position:absolute;inset:0;border-radius:12px;backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px;text-align:center}
+.flip-front{background:linear-gradient(135deg,#1e3a8a,#4361ee);color:#fff}
+.flip-back{background:#fff;border:2px solid var(--border);transform:rotateY(180deg)}
+.flip-front .fe{font-size:13px;font-weight:700;line-height:1.35}
+.flip-front .fhint{font-size:10px;opacity:.7;margin-top:5px}
+.flip-back .fu{font-size:13px;font-weight:700;color:var(--violet)}
+.flip-all-btn{background:var(--violet);color:#fff;border:none;border-radius:10px;padding:9px 20px;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;margin-bottom:14px}
+
+/* SPEAKING */
+.sp-card{background:#f8fafc;border-radius:12px;border:1px solid var(--border);padding:14px 16px;margin-bottom:10px}
+.sp-role{font-size:11px;font-weight:800;color:var(--violet);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.sp-text{font-size:14px;font-weight:600}
+.sp-blank{display:inline-block;width:260px;border-bottom:2px dashed var(--violet);color:var(--muted);font-size:13px;font-style:italic}
+.sp-interview-note{font-size:12px;color:var(--muted);font-style:italic;text-align:center;margin-bottom:14px;background:#f8fafc;padding:8px;border-radius:8px}
+
+/* FAB */
+.results-fab{position:fixed;bottom:20px;right:20px;background:linear-gradient(135deg,var(--blue),var(--violet));color:#fff;border:none;border-radius:50px;padding:12px 20px;font-family:inherit;font-size:13px;font-weight:800;cursor:pointer;box-shadow:0 4px 20px rgba(67,97,238,.4);z-index:100;transition:transform .2s}
+.results-fab:hover{transform:scale(1.04)}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal-box{background:#fff;border-radius:var(--radius);padding:28px;max-width:420px;width:90%;max-height:85vh;overflow-y:auto}
+.modal-box h2{font-size:18px;font-weight:800;margin-bottom:16px}
+.results-table{width:100%;border-collapse:collapse;margin-bottom:14px;font-size:13px}
+.results-table th,.results-table td{border:1px solid var(--border);padding:7px 10px;text-align:left}
+.results-table th{background:#f1f5f9;font-weight:700}
+.results-total{font-size:18px;font-weight:800;text-align:center;margin-bottom:14px;padding:10px;background:#f1f5f9;border-radius:10px}
+.results-area{width:100%;height:130px;font-family:'JetBrains Mono',monospace;font-size:12px;border:1px solid var(--border);border-radius:8px;padding:8px;resize:none}
+.modal-close{margin-top:12px;width:100%;background:var(--blue);color:#fff;border:none;border-radius:10px;padding:10px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge">A2 · Урок 21</div>
+  <h1>👀 Stative Verbs</h1>
+  <p>look, smell, taste, feel, sound + прикметник</p>
+</div>
+
+<!-- STEPPER -->
+<div class="stepper" id="stepper"></div>
+
+<!-- PANELS -->
+<div id="panels">
+
+<!-- STEP 0: WATCH -->
+<div class="step-panel" id="panel-0">
+  <div class="card">
+    <div class="card-title">📐 Граматика</div>
+    <img class="infographic" src="Дієслова_стану_feel_look_smell_taste.png" alt="Stative Verbs Grammar">
+  </div>
+  <div class="card">
+    <div class="card-title">🎬 Дивимось і слухаємо</div>
+    <div class="vimeo-wrap">
+      <iframe src="https://player.vimeo.com/video/578760750" allowfullscreen></iframe>
+    </div>
+    <div class="section-label">4 розмови цього уроку</div>
+    <ul class="conv-list">
+      <li><span class="num">1</span>Kitchen — It smells great!</li>
+      <li><span class="num">2</span>Hotel lobby — You look stunning!</li>
+      <li><span class="num">3</span>Office — I feel terrible.</li>
+      <li><span class="num">4</span>Winter park — It feels so soft.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- STEP 1: СЛОВА -->
+<div class="step-panel" id="panel-1">
+  <div class="card">
+    <div class="card-title">📚 Слова уроку</div>
+    <div class="vocab-grid" id="vocabGrid"></div>
+  </div>
+</div>
+
+<!-- STEP 2: CONV 1 -->
+<div class="step-panel" id="panel-2">
+  <div class="card">
+    <div class="card-title">🎧 Розмова 1 — Smells Good</div>
+    <img class="conv-img" src="A2-21-1-Stative-Verbs-Smells-Good.jpg" alt="Conversation 1">
+    <audio controls style="display:block;width:100%;margin-bottom:20px">
+      <source src="A2-21-1-Stative-Verbs-Smells-Good.mp3">
+      <source src="https://elllo.org/Audio/SoundGrammar/A2-Audio4x/A2-21-1-Stative-Verbs-Smells-Good.mp3">
+    </audio>
+    <div id="quiz-container-0"></div>
+    <div class="quiz-result" id="qresult-0" style="display:none"></div>
+  </div>
+</div>
+
+<!-- STEP 3: CONV 2 -->
+<div class="step-panel" id="panel-3">
+  <div class="card">
+    <div class="card-title">🎧 Розмова 2 — Look Great</div>
+    <img class="conv-img" src="A2-21-2-Stative_Verbs-Look-Great.jpg" alt="Conversation 2">
+    <audio controls style="display:block;width:100%;margin-bottom:20px">
+      <source src="A2-21-2-Stative_Verbs-Look-Great.mp3">
+      <source src="https://elllo.org/Audio/SoundGrammar/A2-Audio4x/A2-21-2-Stative%20Verbs-Look-Great.mp3">
+    </audio>
+    <div id="quiz-container-1"></div>
+    <div class="quiz-result" id="qresult-1" style="display:none"></div>
+  </div>
+</div>
+
+<!-- STEP 4: CONV 3 -->
+<div class="step-panel" id="panel-4">
+  <div class="card">
+    <div class="card-title">🎧 Розмова 3 — Feel Sick</div>
+    <img class="conv-img" src="A2-21-3-Stative_Verbs-Feel-Sick.jpg" alt="Conversation 3">
+    <audio controls style="display:block;width:100%;margin-bottom:20px">
+      <source src="A2-21-3-Stative_Verbs-Feel-Sick.mp3">
+      <source src="https://elllo.org/Audio/SoundGrammar/A2-Audio4x/A2-21-3-Stative%20Verbs-Feel-Sick.mp3">
+    </audio>
+    <div id="quiz-container-2"></div>
+    <div class="quiz-result" id="qresult-2" style="display:none"></div>
+  </div>
+</div>
+
+<!-- STEP 5: CONV 4 -->
+<div class="step-panel" id="panel-5">
+  <div class="card">
+    <div class="card-title">🎧 Розмова 4 — Feels Nice</div>
+    <img class="conv-img" src="A2-21-4-Stative_Verbs-Feels-Nice.jpg" alt="Conversation 4">
+    <audio controls style="display:block;width:100%;margin-bottom:20px">
+      <source src="A2-21-4-Stative_Verbs-Feels-Nice.mp3">
+      <source src="https://elllo.org/Audio/SoundGrammar/A2-Audio4x/A2-21-4-Stative%20Verbs-Feels-Nice.mp3">
+    </audio>
+    <div id="quiz-container-3"></div>
+    <div class="quiz-result" id="qresult-3" style="display:none"></div>
+  </div>
+</div>
+
+<!-- STEP 6: PUZZLE -->
+<div class="step-panel" id="panel-6">
+  <div class="card">
+    <div class="card-title">🧩 Пазл — Вибери правильне слово</div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:16px">Обери слово зі списку, щоб заповнити пропуск у розмові.</p>
+    <div id="pzl-container"></div>
+  </div>
+</div>
+
+<!-- STEP 7: ЧИТАННЯ -->
+<div class="step-panel" id="panel-7">
+  <div class="card">
+    <div class="card-title">📖 Читання — Перекладай усно</div>
+    <div id="reading-slides"></div>
+    <div class="car-nav">
+      <button class="car-btn" id="rprev" onclick="carNav('r',-1)" disabled>← Назад</button>
+      <span class="car-counter" id="rcounter">1 / 4</span>
+      <button class="car-btn" id="rnext" onclick="carNav('r',1)">Далі →</button>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 8: КАРТКИ -->
+<div class="step-panel" id="panel-8">
+  <div class="card">
+    <div class="card-title">🃏 Флеш-картки</div>
+    <button class="flip-all-btn" onclick="flipAll()">🔄 Перевернути всі</button>
+    <div class="flip-grid" id="flipGrid"></div>
+  </div>
+</div>
+
+<!-- STEP 9: ГОВОРИМО -->
+<div class="step-panel" id="panel-9">
+  <div class="card">
+    <div class="card-title">🗣️ Говоримо</div>
+    <div id="speaking-slides"></div>
+    <div class="car-nav">
+      <button class="car-btn" id="spprev" onclick="carNav('sp',-1)" disabled>← Назад</button>
+      <span class="car-counter" id="spcounter">1 / 4</span>
+      <button class="car-btn" id="spnext" onclick="carNav('sp',1)">Далі →</button>
+    </div>
+  </div>
+</div>
+
+</div><!-- /panels -->
+
+<!-- FAB -->
+<button class="results-fab" onclick="openResults()">📊 Результати <span id="fabScore">0/0</span></button>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="resultsModal">
+  <div class="modal-box">
+    <h2>📊 Результати уроку</h2>
+    <table class="results-table">
+      <thead><tr><th>Вправа</th><th>Результат</th></tr></thead>
+      <tbody id="resultsBody"></tbody>
+    </table>
+    <div class="results-total" id="resultsTotal"></div>
+    <textarea class="results-area" id="resultsText" readonly></textarea>
+    <button class="modal-close" onclick="document.getElementById('resultsModal').classList.remove('open')">Закрити</button>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// DATA
+// ============================================================
+const STEPS = [
+  {icon:'🎬', label:'Watch'},
+  {icon:'📚', label:'Слова'},
+  {icon:'🎧', label:'Розмова 1'},
+  {icon:'🎧', label:'Розмова 2'},
+  {icon:'🎧', label:'Розмова 3'},
+  {icon:'🎧', label:'Розмова 4'},
+  {icon:'🧩', label:'Пазл'},
+  {icon:'📖', label:'Читання'},
+  {icon:'🃏', label:'Картки'},
+  {icon:'🗣️', label:'Говоримо'},
+];
+
+const VOCAB = [
+  {en:'smell',              ua:'пахнути / запах'},
+  {en:'stew',               ua:'рагу / тушкована страва'},
+  {en:'Here, have a taste.',ua:'Тримай, спробуй на смак.'},
+  {en:'Oh my gosh!',        ua:'О боже! / Ой леле!'},
+  {en:'it tastes',          ua:'воно смакує'},
+  {en:'look stunning',      ua:'виглядати приголомшливо'},
+  {en:'a date',             ua:'побачення'},
+  {en:"I'd invite",         ua:'я б запросив(-ла)'},
+  {en:"What's wrong?",      ua:'Що трапилося?'},
+  {en:'feel terrible',      ua:'почуватися жахливо'},
+  {en:'vinegar',            ua:'оцет'},
+  {en:'awful',              ua:'жахливий / жахливо'},
+  {en:'wool sweater',       ua:'вовняний светр'},
+  {en:'soft cotton',        ua:'м\'який бавовняний'},
+  {en:'sounds promising',   ua:'звучить багатообіцяюче'},
+];
+
+const CONVS = [
+  {
+    title:'Розмова 1 — Smells Good',
+    img:'A2-21-1-Stative-Verbs-Smells-Good.jpg',
+    questions:[
+      {q:'What is the woman cooking?',
+       opts:['Vegetable soup','Chicken stew','Beef curry','Fish soup'], ans:1},
+      {q:'What does the man say about the smell?',
+       opts:['It smells bad','It smells okay','It smells great','It smells strange'], ans:2},
+      {q:'How does the man describe the taste?',
+       opts:['Terrible','Okay','Good','Fantastic'], ans:3},
+    ]
+  },
+  {
+    title:'Розмова 2 — Look Great',
+    img:'A2-21-2-Stative_Verbs-Look-Great.jpg',
+    questions:[
+      {q:'Why does the woman look stunning?',
+       opts:['She has a job interview','She has a date','She is going to a party','She is at a wedding'], ans:1},
+      {q:'Where is the woman going?',
+       opts:['A French restaurant','A new Italian restaurant','A new Mexican restaurant','A Japanese restaurant'], ans:2},
+      {q:'How does the man describe where she is going?',
+       opts:['It sounds boring','It sounds fun','It sounds expensive','It sounds far'], ans:1},
+    ]
+  },
+  {
+    title:'Розмова 3 — Feel Sick',
+    img:'A2-21-3-Stative_Verbs-Feel-Sick.jpg',
+    questions:[
+      {q:"What is wrong with the woman?",
+       opts:['She is tired','She has a cold','She has a headache','She is stressed'], ans:1},
+      {q:'What remedy does the man suggest?',
+       opts:['Lemon juice and honey','Vinegar and lemon juice','Ginger and honey','Tea with lemon'], ans:1},
+      {q:"What does the woman think of the man's advice?",
+       opts:['It sounds great','It sounds helpful','It sounds awful','It sounds interesting'], ans:2},
+    ]
+  },
+  {
+    title:'Розмова 4 — Feels Nice',
+    img:'A2-21-4-Stative_Verbs-Feels-Nice.jpg',
+    questions:[
+      {q:'What material is the sweater made of?',
+       opts:['Wool','Silk','Cotton','Polyester'], ans:2},
+      {q:'How does the sweater feel?',
+       opts:['Rough and heavy','Warm and thick','Soft and comfy','Old and worn'], ans:2},
+      {q:"What does the man think about the woman's hint?",
+       opts:['It sounds boring','It sounds expensive','It sounds promising','It sounds impossible'], ans:2},
+    ]
+  },
+];
+
+const PUZZLES = [
+  {
+    title:'Розмова 1',
+    audio:'A2-21-1-Stative-Verbs-Smells-Good.mp3',
+    audioCDN:'https://elllo.org/Audio/SoundGrammar/A2-Audio4x/A2-21-1-Stative-Verbs-Smells-Good.mp3',
+    bank:['smells','good','taste','fantastic','stew','cooking'],
+    lines:[
+      {t:'text', v:'Man: What are you '},
+      {t:'gap',  v:'cooking'},
+      {t:'text', v:'? It '},
+      {t:'gap',  v:'smells'},
+      {t:'text', v:' great.'},
+      {t:'br'},
+      {t:'text', v:'Woman: I am making chicken '},
+      {t:'gap',  v:'stew'},
+      {t:'text', v:'.'},
+      {t:'br'},
+      {t:'text', v:'Man: Oh, it looks so '},
+      {t:'gap',  v:'good'},
+      {t:'text', v:'.'},
+      {t:'br'},
+      {t:'text', v:'Woman: Here, have a '},
+      {t:'gap',  v:'taste'},
+      {t:'text', v:'.'},
+      {t:'br'},
+      {t:'text', v:'Man: Oh my gosh! This tastes '},
+      {t:'gap',  v:'fantastic'},
+      {t:'text', v:'.'},
+      {t:'br'},
+      {t:'text', v:'Woman: I am so glad you like it!'},
+    ]
+  },
+  {
+    title:'Розмова 2',
+    audio:'A2-21-2-Stative_Verbs-Look-Great.mp3',
+    audioCDN:'https://elllo.org/Audio/SoundGrammar/A2-Audio4x/A2-21-2-Stative%20Verbs-Look-Great.mp3',
+    bank:['stunning','going','fun','invite','restaurant','know'],
+    lines:[
+      {t:'text', v:'Man: Wow! You look '},
+      {t:'gap',  v:'stunning'},
+      {t:'text', v:'.'},
+      {t:'br'},
+      {t:'text', v:'Woman: Thanks. I have a date.'},
+      {t:'br'},
+      {t:'text', v:'Man: Ooh. Where are you '},
+      {t:'gap',  v:'going'},
+      {t:'text', v:'?'},
+      {t:'br'},
+      {t:'text', v:"Woman: I'm going to the new Mexican "},
+      {t:'gap',  v:'restaurant'},
+      {t:'text', v:'.'},
+      {t:'br'},
+      {t:'text', v:'Man: That sounds '},
+      {t:'gap',  v:'fun'},
+      {t:'text', v:'.'},
+      {t:'br'},
+      {t:'text', v:"Woman: I'd "},
+      {t:'gap',  v:'invite'},
+      {t:'text', v:" you but…"},
+      {t:'br'},
+      {t:'text', v:'Man: Yeah, yeah, I '},
+      {t:'gap',  v:'know'},
+      {t:'text', v:". It's a date. Have fun!"},
+    ]
+  },
+  {
+    title:'Розмова 3',
+    audio:'A2-21-3-Stative_Verbs-Feel-Sick.mp3',
+    audioCDN:'https://elllo.org/Audio/SoundGrammar/A2-Audio4x/A2-21-3-Stative%20Verbs-Feel-Sick.mp3',
+    bank:['wrong','look','feel','awful','vinegar','sorry'],
+    lines:[
+      {t:'text', v:"Man: What's "},
+      {t:'gap',  v:'wrong'},
+      {t:'text', v:'? You '},
+      {t:'gap',  v:'look'},
+      {t:'text', v:' terrible.'},
+      {t:'br'},
+      {t:'text', v:'Woman: I '},
+      {t:'gap',  v:'feel'},
+      {t:'text', v:' terrible. I have a cold.'},
+      {t:'br'},
+      {t:'text', v:'Man: Oh, '},
+      {t:'gap',  v:'sorry'},
+      {t:'text', v:' to hear that.'},
+      {t:'br'},
+      {t:'text', v:'Woman: Any advice?'},
+      {t:'br'},
+      {t:'text', v:'Man: Well, I hear '},
+      {t:'gap',  v:'vinegar'},
+      {t:'text', v:' and lemon juice helps.'},
+      {t:'br'},
+      {t:'text', v:'Woman: That sounds '},
+      {t:'gap',  v:'awful'},
+      {t:'text', v:'. No thanks.'},
+    ]
+  },
+  {
+    title:'Розмова 4',
+    audio:'A2-21-4-Stative_Verbs-Feels-Nice.mp3',
+    audioCDN:'https://elllo.org/Audio/SoundGrammar/A2-Audio4x/A2-21-4-Stative%20Verbs-Feels-Nice.mp3',
+    bank:['feels','looks','comfy','sounds','sweater','cotton'],
+    lines:[
+      {t:'text', v:'Man: I like your '},
+      {t:'gap',  v:'sweater'},
+      {t:'text', v:'. Is it wool?'},
+      {t:'br'},
+      {t:'text', v:'Woman: No, it is '},
+      {t:'gap',  v:'cotton'},
+      {t:'text', v:'. Feel it!'},
+      {t:'br'},
+      {t:'text', v:'Man: Wow, it '},
+      {t:'gap',  v:'feels'},
+      {t:'text', v:' so soft.'},
+      {t:'br'},
+      {t:'text', v:'Woman: It is. It is so '},
+      {t:'gap',  v:'comfy'},
+      {t:'text', v:' too.'},
+      {t:'br'},
+      {t:'text', v:'Man: It '},
+      {t:'gap',  v:'looks'},
+      {t:'text', v:' comfy. I want one.'},
+      {t:'br'},
+      {t:'text', v:"Woman: Well, Christmas is almost here. Maybe someone special might get you one."},
+      {t:'br'},
+      {t:'text', v:'Man: Ooh! That '},
+      {t:'gap',  v:'sounds'},
+      {t:'text', v:' promising.'},
+    ]
+  },
+];
+
+const TRANSCRIPTS = [
+  {title:'Розмова 1 — Smells Good', lines:[
+    '<strong>Man:</strong> What are you cooking? It smells great.',
+    '<strong>Woman:</strong> I am making chicken stew.',
+    '<strong>Man:</strong> Oh, it looks so good.',
+    '<strong>Woman:</strong> Here, have a taste.',
+    '<strong>Man:</strong> Oh my gosh! This tastes fantastic.',
+    '<strong>Woman:</strong> I am so glad you like it!',
+  ]},
+  {title:'Розмова 2 — Look Great', lines:[
+    '<strong>Man:</strong> Wow! You look stunning.',
+    '<strong>Woman:</strong> Thanks. I have a date.',
+    '<strong>Man:</strong> Ooh. Where are you going?',
+    "<strong>Woman:</strong> I'm going to the new Mexican restaurant.",
+    '<strong>Man:</strong> That sounds fun.',
+    "<strong>Woman:</strong> I'd invite you but…",
+    "<strong>Man:</strong> Yeah, yeah, I know. It's a date. Have fun!",
+  ]},
+  {title:'Розмова 3 — Feel Sick', lines:[
+    "<strong>Man:</strong> What's wrong? You look terrible.",
+    '<strong>Woman:</strong> I feel terrible. I have a cold.',
+    '<strong>Man:</strong> Oh, sorry to hear that.',
+    '<strong>Woman:</strong> Any advice?',
+    '<strong>Man:</strong> Well, I hear vinegar and lemon juice helps.',
+    '<strong>Woman:</strong> That sounds awful. No thanks.',
+  ]},
+  {title:'Розмова 4 — Feels Nice', lines:[
+    '<strong>Man:</strong> I like your sweater. Is it wool?',
+    '<strong>Woman:</strong> No, it is cotton. Feel it!',
+    '<strong>Man:</strong> Wow, it feels so soft.',
+    '<strong>Woman:</strong> It is. It is so comfy too.',
+    '<strong>Man:</strong> It looks comfy. I want one.',
+    "<strong>Woman:</strong> Well, Christmas is almost here. Maybe someone special might get you one.",
+    '<strong>Man:</strong> Ooh! That sounds promising.',
+  ]},
+];
+
+const FLASHCARDS = [
+  {en:'It smells great.',              ua:'Це чудово пахне.'},
+  {en:'I am making chicken stew.',     ua:'Я готую курине рагу.'},
+  {en:'Here, have a taste.',           ua:'Тримай, спробуй на смак.'},
+  {en:'This tastes fantastic!',        ua:'Це смакує фантастично!'},
+  {en:'You look stunning.',            ua:'Ти виглядаєш приголомшливо.'},
+  {en:'I have a date.',                ua:'У мене побачення.'},
+  {en:'That sounds fun.',              ua:'Звучить весело.'},
+  {en:"I'd invite you but…",          ua:'Я б запросив(-ла) тебе, але…'},
+  {en:"What's wrong?",                 ua:'Що трапилось?'},
+  {en:'I feel terrible.',              ua:'Я почуваюся жахливо.'},
+  {en:'That sounds awful.',            ua:'Це звучить жахливо.'},
+  {en:'It feels so soft.',             ua:'Воно таке м\'яке на дотик.'},
+];
+
+const SPEAKING = [
+  {
+    title:'Діалог 1 з 4',
+    note:'🤝 Парна розмова — обидва читають свій текст українською',
+    interview:false,
+    lines:[
+      {role:'Студент А', text:'Що ти готуєш? Так смачно пахне!'},
+      {role:'Студент Б', text:'Я роблю курячий суп з овочами.'},
+      {role:'Студент А', text:'Виглядає так добре! Можна спробувати?'},
+      {role:'Студент Б', text:'Так, тримай! Як тобі смакує?'},
+      {role:'Студент А', text:'О боже, це просто фантастично! Ти часто готуєш?'},
+      {role:'Студент Б', text:'Так, я люблю готувати нові страви вдома.'},
+      {role:'Студент А', text:'Мені б теж хотілося навчитися це готувати!'},
+      {role:'Студент Б', text:'Звичайно, я можу навчити тебе. Це нескладно.'},
+    ]
+  },
+  {
+    title:'Діалог 2 з 4',
+    note:'🤝 Парна розмова — обидва читають свій текст українською',
+    interview:false,
+    lines:[
+      {role:'Студент А', text:'Ого, ти сьогодні виглядаєш приголомшливо!'},
+      {role:'Студент Б', text:'Дякую! У мене сьогодні побачення.'},
+      {role:'Студент А', text:'Правда? Куди ви йдете?'},
+      {role:'Студент Б', text:'У новий ресторан у центрі. Відгуки звучать дуже добре.'},
+      {role:'Студент А', text:'Звучить цікаво! Ти вже там бував(-ла)?'},
+      {role:'Студент Б', text:'Ні, вперше. Але кажуть, їжа там смакує чудово.'},
+      {role:'Студент А', text:'Я б теж пішов(-ла), але розумію — це ж побачення!'},
+      {role:'Студент Б', text:'Саме так! Гарного вечора і тобі.'},
+    ]
+  },
+  {
+    title:'Діалог 3 з 4',
+    note:'🎤 Студент А перекладає запитання англійською → Студент Б відповідає про себе',
+    interview:true,
+    lines:[
+      {role:'Студент А', text:'Що тобі приємно пахне?'},
+      {role:'Студент Б', blank:true},
+      {role:'Студент А', text:'Що смакує тобі найбільше?'},
+      {role:'Студент Б', blank:true},
+      {role:'Студент А', text:'Як виглядає твоя улюблена їжа?'},
+      {role:'Студент Б', blank:true},
+      {role:'Студент А', text:'Що звучить для тебе нецікаво?'},
+      {role:'Студент Б', blank:true},
+      {role:'Студент А', text:'Як відчувається твій улюблений одяг?'},
+      {role:'Студент Б', blank:true},
+      {role:'Студент А', text:'Що виглядає смачно, але не смакує?'},
+      {role:'Студент Б', blank:true},
+      {role:'Студент А', text:'Що звучить важко, але насправді легко?'},
+      {role:'Студент Б', blank:true},
+      {role:'Študent А', text:'Що пахне приємно у твоєму домі?'},
+      {role:'Студент Б', blank:true},
+    ]
+  },
+  {
+    title:'Діалог 4 з 4',
+    note:'🎤 Студент А перекладає запитання англійською → Студент Б відповідає про себе',
+    interview:true,
+    lines:[
+      {role:'Студент А', text:'Як ти почуваєшся сьогодні?'},
+      {role:'Студент Б', blank:true},
+      {role:'Студент А', text:'Що виглядає добре на вулиці зараз?'},
+      {role:'Студент Б', blank:true},
+      {role:'Студент А', text:'Що звучить весело на вихідних?'},
+      {role:'Студент Б', blank:true},
+      {role:'Студент А', text:'Що смакує тобі зранку?'},
+      {role:'Студент Б', blank:true},
+      {role:'Студент А', text:'Як відчувається твій улюблений светр чи куртка?'},
+      {role:'Студент Б', blank:true},
+      {role:'Студент А', text:'Що виглядає складно для тебе в англійській мові?'},
+      {role:'Студент Б', blank:true},
+      {role:'Студент А', text:'Що звучить цікаво для наступного уроку?'},
+      {role:'Студент Б', blank:true},
+      {role:'Студент А', text:'Що пахне неприємно для тебе?'},
+      {role:'Студент Б', blank:true},
+    ]
+  },
+];
+
+// ============================================================
+// SCORING
+// ============================================================
+const correctMap   = {};
+const quizAnswered = {};
+const quizScores   = {};
+const puzzleScores = {};
+
+// ============================================================
+// STEPPER
+// ============================================================
+(function buildStepper(){
+  const st = document.getElementById('stepper');
+  STEPS.forEach((s,i)=>{
+    const b = document.createElement('button');
+    b.className = 'step-btn';
+    b.id = 'sbtn-'+i;
+    b.innerHTML = '<span class="sicon">'+s.icon+'</span><span>'+s.label+'</span>';
+    b.onclick = ()=>goStep(i);
+    st.appendChild(b);
+  });
+})();
+
+function goStep(i){
+  document.querySelectorAll('.step-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.step-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-'+i).classList.add('active');
+  document.getElementById('sbtn-'+i).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function markDone(i){
+  const b = document.getElementById('sbtn-'+i);
+  if(b) b.classList.add('done');
+}
+
+// ============================================================
+// VOCAB
+// ============================================================
+(function buildVocab(){
+  const g = document.getElementById('vocabGrid');
+  let h = '';
+  VOCAB.forEach(v=>{
+    const esc = v.en.replace(/'/g,"\\'");
+    h += '<div class="vocab-item">' +
+         '<div class="vocab-word">' + v.en +
+           '<div class="vocab-ua">' + v.ua + '</div>' +
+         '</div>' +
+         '<button class="speak-btn" onclick="speak(\'' + esc + '\')">🔊</button>' +
+         '</div>';
+  });
+  g.innerHTML = h;
+})();
+
+function speak(t){
+  const u = new SpeechSynthesisUtterance(t);
+  u.lang = 'en-US'; u.rate = 0.85;
+  speechSynthesis.speak(u);
+}
+
+// ============================================================
+// QUIZ
+// ============================================================
+(function buildQuizzes(){
+  CONVS.forEach((c,ci)=>{
+    const cont = document.getElementById('quiz-container-'+ci);
+    let h = '';
+    c.questions.forEach((q,qi)=>{
+      const qKey = 'q'+(ci+1);
+      h += '<div class="quiz-q"><p>'+(qi+1)+'. '+q.q+'</p><div class="quiz-opts">';
+      q.opts.forEach((o,oi)=>{
+        h += '<button class="quiz-opt" onclick="answerQuiz(\''+qKey+'\','+qi+','+oi+','+q.ans+','+ci+',this)">'+o+'</button>';
+      });
+      h += '</div></div>';
+    });
+    cont.innerHTML = h;
+  });
+})();
+
+function answerQuiz(qKey,qi,oi,ans,ci,btn){
+  const ck = qKey+'-'+qi;
+  if(quizAnswered[ck]) return;
+  quizAnswered[ck] = true;
+  correctMap[ck] = (oi===ans);
+  const allOpts = btn.parentElement.querySelectorAll('.quiz-opt');
+  allOpts.forEach(b=>b.disabled=true);
+  if(oi===ans){
+    btn.classList.add('correct');
+  } else {
+    btn.classList.add('wrong');
+    allOpts[ans].classList.add('correct');
+  }
+  const total = CONVS[ci].questions.length;
+  const allDone = Array.from({length:total},(_,k)=>!!quizAnswered[qKey+'-'+k]).every(Boolean);
+  if(allDone){
+    let got = 0;
+    for(let k=0;k<total;k++) if(correctMap[qKey+'-'+k]) got++;
+    quizScores[qKey] = {got, total};
+    updateFab();
+    markDone(ci+2);
+    const res = document.getElementById('qresult-'+ci);
+    res.style.display = 'block';
+    res.className = 'quiz-result '+(got===total?'pass':'fail');
+    res.innerHTML = (got===total?'🏆':'💪')+' Результат: '+got+'/'+total;
+  }
+}
+
+// ============================================================
+// PUZZLE
+// ============================================================
+function makeSel(ans, pi, bank){
+  const shuffled = [...bank].sort(()=>Math.random()-.5);
+  let o = '<option value="">—</option>';
+  shuffled.forEach(w=>{ o += '<option value="'+w+'">'+w+'</option>'; });
+  return '<select class="pzl-sel" data-ans="'+ans+'" data-pi="'+pi+'">' + o + '</select>';
+}
+
+(function buildPuzzles(){
+  const cont = document.getElementById('pzl-container');
+  let html = '';
+  PUZZLES.forEach((pz,pi)=>{
+    const pKey = 'p'+(pi+1);
+    let lh = '<div class="pzl-line">';
+    pz.lines.forEach(tok=>{
+      if(tok.t==='text') lh += '<span class="pzl-word">'+tok.v+'</span>';
+      else if(tok.t==='gap') lh += makeSel(tok.v, pi, pz.bank);
+      else if(tok.t==='br') lh += '</div><div class="pzl-line">';
+    });
+    lh += '</div>';
+    html += '<div class="card" id="pzl-card-'+pi+'">' +
+      '<div style="font-weight:800;font-size:15px;margin-bottom:14px">'+pz.title+'</div>' +
+      lh +
+      '<div class="pzl-audio-label">💡 Якщо треба — прослухай аудіо ще раз — '+pz.title+'</div>' +
+      '<div id="pzl-aud-'+pi+'"></div>' +
+      '<button class="check-btn" onclick="checkPuzzle('+pi+',\''+pKey+'\')">Перевірити</button>' +
+      '<div class="pzl-score" id="pzl-score-'+pi+'"></div>' +
+      '</div>';
+  });
+  cont.innerHTML = html;
+
+  PUZZLES.forEach((pz,pi)=>{
+    const wrap = document.getElementById('pzl-aud-'+pi);
+    const aud = document.createElement('audio');
+    aud.controls = true;
+    aud.style.cssText = 'display:block;width:100%;margin-bottom:12px';
+    const s1 = document.createElement('source'); s1.src = pz.audio;
+    const s2 = document.createElement('source'); s2.src = pz.audioCDN;
+    aud.appendChild(s1); aud.appendChild(s2);
+    wrap.appendChild(aud);
+  });
+})();
+
+function checkPuzzle(pi, pKey){
+  const card = document.getElementById('pzl-card-'+pi);
+  const sels = card.querySelectorAll('.pzl-sel');
+  let got = 0, total = sels.length;
+  sels.forEach(sel=>{
+    if(sel.value===sel.dataset.ans){ sel.className='pzl-sel ok'; got++; }
+    else { sel.className='pzl-sel err'; }
+  });
+  puzzleScores[pKey] = {got, total};
+  updateFab();
+  const sc = document.getElementById('pzl-score-'+pi);
+  sc.innerHTML = '<span style="color:'+(got===total?'var(--green)':'var(--red)')+'">'+
+    (got===total?'🏆':'💪')+' '+got+'/'+total+'</span>';
+  if(got===total) markDone(6);
+}
+
+// ============================================================
+// READING
+// ============================================================
+(function buildReading(){
+  const cont = document.getElementById('reading-slides');
+  TRANSCRIPTS.forEach((tr,i)=>{
+    const d = document.createElement('div');
+    d.className = 'slide'+(i===0?' active':'');
+    d.id = 'rslide'+i;
+    let h = '<div class="section-label">'+tr.title+'</div><div class="transcript">';
+    tr.lines.forEach(l=>{ h += '<p>'+l+'</p>'; });
+    h += '</div>';
+    d.innerHTML = h;
+    cont.appendChild(d);
+  });
+})();
+
+// ============================================================
+// FLASHCARDS
+// ============================================================
+(function buildFlashcards(){
+  const g = document.getElementById('flipGrid');
+  let h = '';
+  FLASHCARDS.forEach((c,i)=>{
+    h += '<div class="flip-card" id="fc'+i+'" onclick="flipCard('+i+')">' +
+         '<div class="flip-inner">' +
+         '<div class="flip-front"><div class="fe">'+c.en+'</div><div class="fhint">🇬🇧 Перекладай українською</div></div>' +
+         '<div class="flip-back"><div class="fu">'+c.ua+'</div></div>' +
+         '</div></div>';
+  });
+  g.innerHTML = h;
+})();
+
+function flipCard(i){ document.getElementById('fc'+i).classList.toggle('flipped'); }
+function flipAll(){
+  const cards = document.querySelectorAll('.flip-card');
+  const anyFlipped = document.querySelector('.flip-card.flipped');
+  cards.forEach(c=>{ anyFlipped ? c.classList.remove('flipped') : c.classList.add('flipped'); });
+}
+
+// ============================================================
+// SPEAKING
+// ============================================================
+(function buildSpeaking(){
+  const cont = document.getElementById('speaking-slides');
+  SPEAKING.forEach((sp,i)=>{
+    const d = document.createElement('div');
+    d.className = 'slide'+(i===0?' active':'');
+    d.id = 'spslide'+i;
+    let h = '<div class="section-label" style="margin-bottom:10px">'+sp.title+'</div>';
+    if(sp.note) h += '<div class="sp-interview-note">'+sp.note+'</div>';
+    sp.lines.forEach(ln=>{
+      h += '<div class="sp-card"><div class="sp-role">'+ln.role+'</div><div class="sp-text">';
+      h += ln.blank ? '<span class="sp-blank">відповідає про себе англійською...</span>' : ln.text;
+      h += '</div></div>';
+    });
+    d.innerHTML = h;
+    cont.appendChild(d);
+  });
+})();
+
+// ============================================================
+// CAROUSEL
+// ============================================================
+const carState = {r:0, sp:0};
+
+function carNav(id, dir){
+  carState[id] = Math.max(0, Math.min(3, carState[id]+dir));
+  const idx = carState[id];
+  const prefix = id==='r' ? 'rslide' : 'spslide';
+  document.querySelectorAll('[id^="'+prefix+'"]').forEach((s,i)=>s.classList.toggle('active',i===idx));
+  document.getElementById(id+'prev').disabled = idx===0;
+  document.getElementById(id+'next').disabled = idx===3;
+  document.getElementById(id+'counter').textContent = (idx+1)+' / 4';
+  if(id==='r' && idx===3) markDone(7);
+  if(id==='sp' && idx===3) markDone(9);
+}
+
+// ============================================================
+// RESULTS
+// ============================================================
+function updateFab(){
+  let g=0, t=0;
+  Object.values(quizScores).forEach(s=>{if(s){g+=s.got;t+=s.total;}});
+  Object.values(puzzleScores).forEach(s=>{if(s){g+=s.got;t+=s.total;}});
+  document.getElementById('fabScore').textContent = g+'/'+t;
+}
+
+function openResults(){
+  let rows='', g=0, t=0;
+  for(let i=1;i<=4;i++){
+    const s = quizScores['q'+i];
+    const v = s ? s.got+'/'+s.total : '—';
+    if(s){g+=s.got;t+=s.total;}
+    rows += '<tr><td>Quiz '+i+'</td><td>'+v+'</td></tr>';
+  }
+  for(let i=1;i<=4;i++){
+    const s = puzzleScores['p'+i];
+    const v = s ? s.got+'/'+s.total : '—';
+    if(s){g+=s.got;t+=s.total;}
+    rows += '<tr><td>Puzzle '+i+'</td><td>'+v+'</td></tr>';
+  }
+  document.getElementById('resultsBody').innerHTML = rows;
+  const pct = t>0 ? Math.round(g/t*100) : 0;
+  const medal = pct>=90?'🏆':pct>=70?'🌟':pct>=50?'👍':'💪';
+  document.getElementById('resultsTotal').textContent = medal+' '+g+'/'+t+' — '+pct+'%';
+  let txt = 'A2-21 Stative Verbs\n'+'─'.repeat(28)+'\n';
+  for(let i=1;i<=4;i++){const s=quizScores['q'+i]; txt+='Quiz '+i+': '+(s?s.got+'/'+s.total:'—')+'\n';}
+  for(let i=1;i<=4;i++){const s=puzzleScores['p'+i]; txt+='Puzzle '+i+': '+(s?s.got+'/'+s.total:'—')+'\n';}
+  txt += '─'.repeat(28)+'\nЗагалом: '+g+'/'+t+' ('+pct+'%) '+medal;
+  document.getElementById('resultsText').value = txt;
+  document.getElementById('resultsModal').classList.add('open');
+}
+
+goStep(0);
+</script>
+</body>
+</html>
